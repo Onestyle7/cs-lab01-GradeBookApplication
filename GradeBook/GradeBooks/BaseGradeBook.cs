@@ -10,6 +10,7 @@ using System.Net.NetworkInformation;
 
 namespace GradeBook.GradeBooks
 {
+
     public class BaseGradeBook
     {
         public string Name { get; set; }
@@ -268,6 +269,11 @@ namespace GradeBook.GradeBooks
                              select type).FirstOrDefault();
             
             return JsonConvert.DeserializeObject(json, gradebook);
+        }
+
+        public static explicit operator string(BaseGradeBook v)
+        {
+            throw new NotImplementedException();
         }
     }
 }
