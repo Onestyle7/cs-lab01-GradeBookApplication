@@ -11,12 +11,26 @@ using System.Net.NetworkInformation;
 namespace GradeBook.GradeBooks
 {
 
-    public class BaseGradeBook
+    public abstract class BaseGradeBook
     {
+        public bool IsWeighted { get; set; }
         public string Name { get; set; }
         public GradeBookType Type { get; set; }
 
         public List<Student> Students { get; set; }
+        public BaseGradeBook(string name, bool isWeighted)
+        {
+            Name = name;
+            IsWeighted = isWeighted;
+        }
+
+        public class StandardGradeBook : BaseGradeBook
+        {
+            public StandardGradeBook(string name, bool isWeighted) : base(name, isWeighted)
+            {
+
+            }
+        }
 
         public BaseGradeBook(string name)
         {
@@ -113,13 +127,13 @@ namespace GradeBook.GradeBooks
             switch (letterGrade)
             {
                 case 'A':
-                    return 4;
+                    return studentType == StudentType.Honors || studentType == StudentType.DualEnrolled ? 5 : 4;
                 case 'B':
-                    return 3;
+                    return studentType == StudentType.Honors || studentType == StudentType.DualEnrolled ? 4 : 3;
                 case 'C':
-                    return 2;
+                    return studentType == StudentType.Honors || studentType == StudentType.DualEnrolled ? 3 : 2;
                 case 'D':
-                    return 1;
+                    return studentType == StudentType.Honors || studentType == StudentType.DualEnrolled ? 2 : 1;
                 case 'F':
                     return 0;
             }

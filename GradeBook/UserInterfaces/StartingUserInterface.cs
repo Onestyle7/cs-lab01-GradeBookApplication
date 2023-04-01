@@ -30,7 +30,7 @@ namespace GradeBook.UserInterfaces
             else
                 Console.WriteLine("{0} was not recognized, please try again.", command);
         }
-       private static BaseGradeBook CreateGradeBook(string name, string type)
+       private static BaseGradeBook CreateGradeBook(string name, string type, bool isWeighted)
         {
             if (type.ToLower() == "standard")
             {
@@ -49,15 +49,17 @@ namespace GradeBook.UserInterfaces
         public static BaseGradeBook CreateCommand(string command)
         {
             var parts = command.Split(' ');
-            if (parts.Length != 3)
+            if (parts.Length != 4)
             {
                 Console.WriteLine("Command not valid, Create requires a name and type of gradebook.");
                 return null;
             }
+
           
             var name = parts[1];
             var type = parts[2];
-            var gradeBook = CreateGradeBook(name, type);
+            var isWeighted = bool.Parse(parts[3]);
+            var gradeBook = CreateGradeBook(name, type, isWeighted);
 
             if (gradeBook != null)
             {
@@ -85,14 +87,11 @@ namespace GradeBook.UserInterfaces
 
         public static void HelpCommand()
         {
-            //Console.WriteLine($"Create 'Name' 'Type' 'Weighted' - Creates a new gradebook where 'Name' is the name of the gradebook, 'Type' is what type of grading it should use, and 'Weighted' is whether or not grades should be weighted (true or false).");
-           
-            Console.WriteLine("Commands:");
-            Console.WriteLine("Create 'Name' 'Type' - Creates a new gradebook where 'Name' is the name of the gradebook and 'Type' is what type of grading it should use.");
-            Console.WriteLine("Add 'Name' 'Grade' - Adds a grade to the gradebook where 'Name' is the name of the gradebook and 'Grade' is the grade to be added.");
-            Console.WriteLine("Remove 'Name' 'Grade' - Removes a grade from the gradebook where 'Name' is the name of the gradebook and 'Grade' is the grade to be removed.");
-            Console.WriteLine("Stats 'Name' - Prints statistics for the gradebook where 'Name' is the name of the gradebook.");
-            Console.WriteLine("Exit - Exits the program.");
+            Console.WriteLine("Available commands:");
+            Console.WriteLine("  create 'Name' 'Type' 'Weighted' - Creates a new gradebook where 'Name' is the name of the gradebook, 'Type' is what type of grading it should use, and 'Weighted' is whether or not grades should be weighted (true or false).");
+            Console.WriteLine("  load 'Name' - Loads a gradebook by name.");
+            Console.WriteLine("  save 'Name' - Saves a gradebook by name.");
+            Console.WriteLine("  quit - Exits the application.");
 
         }
     }
